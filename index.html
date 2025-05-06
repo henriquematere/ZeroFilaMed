@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Zero Fila Med</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="header">
-        <h1>Zero Fila Med</h1>
+        <h1 id="title-geral">Zero Fila Med</h1>
     </div>
     <div class="container">
         <div class="mid">
@@ -26,6 +27,73 @@
                 <img src="Fila.png" class="fila" alt="Fila Hospitalar">
             </div>
         </div>
+        <div class="graphic-top">
+            <div class="grapich-top-title">
+                <h2>Pronto-Socorro</h2>
+            </div>
+            <div class="btn-group dropend">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filtroBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filtrar
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="filtroBtn">
+                    <li><a class="dropdown-item" href="#" onclick="mudarTexto('Últimos 7 dias')">Últimos 7 dias</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="mudarTexto('Últimos 30 dias')">Últimos 30 dias</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="mudarTexto('Últimos 90 dias')">Últimos 90 dias</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="graphics">
+            <div class="graphics-left">
+                <div class="graphics-left-top">
+                    <div class="card shadow-sm mb-3" style="width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Pessoas Aguardando</h5>
+                            <h2 class="card-text">124</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="graphics-left-bottom">
+                    <div class="card shadow-sm mb-3 w-100">
+                        <div class="card-body w-100">
+                            <h5 class="card-title">Últimas 12 Horas</h5>
+                
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-2" style="width: 100%;">
+                                <span class="fw-bold">Atendimentos</span>
+                                <span>117</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center py-2" style="width: 100%;">
+                                <span class="fw-bold">Estimativa</span>
+                                <span>45 min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>      
+            </div>
+            <div class="graphics-mid">
+                <div class="card shadow-sm mb-3 w-100">
+                        <div class="card-body w-100">
+                            <h5 class="card-title">Últimas 12 Horas</h5>
+                
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-2" style="width: 100%;">
+                                <span class="fw-bold">Atendimentos</span>
+                                <span>117</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center py-2" style="width: 100%;">
+                                <span class="fw-bold">Estimativa</span>
+                                <span>45 min</span>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="graphics-right"></div>
+        </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function mudarTexto(texto) {
+            document.getElementById('filtroBtn').innerText = texto;
+        }
+    </script>
 </body>
 </html>
