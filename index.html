@@ -1,99 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Zero Fila Med</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./style/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="header">
-        <h1 id="title-geral">Zero Fila Med</h1>
+        <h1 class="title">Zero Fila Med</h1>
     </div>
-    <div class="container">
-        <div class="mid">
-            <div class="mid-left">
-                <div class="mid-left-top">
-                    <h2>O que é<br><span style="color: #1351b4;">Zero Fila Med</span>?</h2>
-                </div>
-                <div class="mid-left-bottom">
-                    <p>É um sistema que monitora em tempo real quantas pessoas estão no hospital.
-                        Além disso, gera gráficos diários mostrando o fluxo de atendimento e, com base no histórico, prevê
-                        quais horários e dias tendem a ser mais tranquilos. Assim, você pode escolher o <b>melhor momento</b> para ir ao hospital e <b>evitar filas</b>.
-                    </p>
-                </div>
-            </div>
-            <div class="mid-right">
-                <img src="Fila.png" class="fila" alt="Fila Hospitalar">
-            </div>
-        </div>
-        <div class="graphic-top">
-            <div class="grapich-top-title">
-                <h2>Pronto-Socorro</h2>
-            </div>
-            <div class="btn-group dropend">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filtroBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                    Filtrar
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="filtroBtn">
-                    <li><a class="dropdown-item" href="#" onclick="mudarTexto('Últimos 7 dias')">Últimos 7 dias</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="mudarTexto('Últimos 30 dias')">Últimos 30 dias</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="mudarTexto('Últimos 90 dias')">Últimos 90 dias</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="graphics">
-            <div class="graphics-left">
-                <div class="graphics-left-top">
-                    <div class="card shadow-sm mb-3" style="width: 100%;">
-                        <div class="card-body">
-                            <h5 class="card-title">Pessoas Aguardando</h5>
-                            <h2 class="card-text">124</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="graphics-left-bottom">
-                    <div class="card shadow-sm mb-3 w-100">
-                        <div class="card-body w-100">
-                            <h5 class="card-title">Últimas 12 Horas</h5>
-                
-                            <div class="d-flex justify-content-between align-items-center border-bottom py-2" style="width: 100%;">
-                                <span class="fw-bold">Atendimentos</span>
-                                <span>117</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center py-2" style="width: 100%;">
-                                <span class="fw-bold">Estimativa</span>
-                                <span>45 min</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>      
-            </div>
-            <div class="graphics-mid">
-                <div class="card shadow-sm mb-3 w-100">
-                        <div class="card-body w-100">
-                            <h5 class="card-title">Últimas 12 Horas</h5>
-                
-                            <div class="d-flex justify-content-between align-items-center border-bottom py-2" style="width: 100%;">
-                                <span class="fw-bold">Atendimentos</span>
-                                <span>117</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center py-2" style="width: 100%;">
-                                <span class="fw-bold">Estimativa</span>
-                                <span>45 min</span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="graphics-right"></div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function mudarTexto(texto) {
-            document.getElementById('filtroBtn').innerText = texto;
-        }
-    </script>
 </body>
+
 </html>

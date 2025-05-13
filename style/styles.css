@@ -1,0 +1,60 @@
+:root {
+  --color-00: #ffffff;
+  --color-01: #f7f7f7;
+  --color-02: #ededed;
+  --color-03: #dedede;
+  --color-04: #cccccc;
+  --color-05: #b2b2b2;
+  --color-06: #9c9c9c;
+  --color-07: #717171;
+  --color-08: #595959;
+  --color-09: #404040;
+  --color-10: #2e2e2e;
+  --color-11: #111111;
+  --color-12: #000000;
+  --color-p01: #1351b4;
+  --color-p02: #4978c5;
+  --color-back: #ecf1f9;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', 'sans-serif';
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  background: var(--color-back);
+}
+
+.header {
+  background: var(--color-00);
+  display: flex;
+  justify-content: center;
+}
+
+.header .title {
+  font-family: 'Playfair', serif;
+  font-size: 4.8rem;
+  font-weight: 900;
+  color: var(--color-p01);
+}
+
+@media (max-width: 769px) {
+  .header .title {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 426px) {
+  .header .title {
+    font-size: 3.2rem;
+  }
+}
