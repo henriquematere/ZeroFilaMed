@@ -6,12 +6,13 @@
 
 body {
     font-family: 'Playfair Display', serif;
-    background-color: #ffffff;
+    background-color: #ecf1f9;
 }
 
 .header {
     padding: 20px 0;
     text-align: center;
+    background-color: #ffffff;
 }
 
 #title-geral {
@@ -154,4 +155,25 @@ h2 {
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
+}
+
+.destaque-suave {
+    background: linear-gradient(135deg, #f0f4ff, #e5edf8);
+    border-left: 10px solid #1351b4;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destaque-suave:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.destaque-suave .card-title {
+    color: #1d3557;
+}
+
+.destaque-suave h1 {
+    color: #1351b4;
 }
