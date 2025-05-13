@@ -34,27 +34,92 @@ body {
   background: var(--color-back);
 }
 
-.header {
+ol,
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header {
   background: var(--color-00);
   display: flex;
   justify-content: center;
 }
 
-.header .title {
-  font-family: 'Playfair', serif;
+.title {
+  /* font-family: 'Playfair', serif; */
   font-size: 4.8rem;
   font-weight: 900;
   color: var(--color-p01);
 }
 
+.footer-bg {
+  background: var(--color-00);
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  margin: 0 5rem 0 5rem;
+  padding: 4rem 0 2rem 0;
+  border-top: 0.2rem solid var(--color-p01);
+  border-bottom: 0.2rem solid var(--color-p01);
+}
+
+/* .footer-container .title {
+  font-family: 'Oleo Script';
+} */
+
+.footer-info ul {
+  display: grid;
+}
+
+.footer-info a {
+  display: flex;
+  justify-items: center;
+  gap: 0.5rem;
+}
+
+footer .footer-info a,
+footer .copyright {
+  font-family: 'Roboto';
+  font-size: 1.6rem;
+}
+
+footer .copyright {
+  color: var(--color-08);
+  margin-left: 5rem;
+  padding-top: 2rem;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
+
 @media (max-width: 769px) {
-  .header .title {
+  .title {
     font-size: 4rem;
+  }
+  footer .footer-info a,
+  footer .copyright {
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 426px) {
-  .header .title {
+  .title {
     font-size: 3.2rem;
+  }
+  .footer-container {
+    flex-direction: column;
   }
 }
