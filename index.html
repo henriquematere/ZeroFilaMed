@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Zero Fila Med</title>
+<<<<<<< HEAD
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+=======
+    <meta name="description" content="monitora em tempo real quantas pessoas estão no hospital.">
+
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./style/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+>>>>>>> dev/Dirceu
 </head>
+
 <body>
-    <div class="header">
-        <h1 id="title-geral">Zero Fila Med</h1>
-    </div>
     <div class="container">
-        <div class="mid">
-            <div class="mid-left">
-                <div class="mid-left-top">
-                    <h2>O que é<br><span style="color: #1351b4;">Zero Fila Med</span>?</h2>
-                </div>
-                <div class="mid-left-bottom">
-                    <p>É um sistema que monitora em tempo real quantas pessoas estão no hospital.
-                        Além disso, gera gráficos diários mostrando o fluxo de atendimento e, com base no histórico, prevê
-                        quais horários e dias tendem a ser mais tranquilos. Assim, você pode escolher o <b>melhor momento</b> para ir ao hospital e <b>evitar filas</b>.
+        <header>
+            <h1 class="title">Zero Fila Med</h1>
+        </header>
+
+        <main>
+            <section class="section-01">
+                <div>
+                    <h2 class="title-about">O que é<br><span class="title">Zero Fila Med</span>?</h2>
+                    <p class="text-about">
+                        É um sistema que monitora em tempo real quantas pessoas estão no hospital. Além disso, gera gráficos diários mostrando o fluxo de atendimento e, com base no histórico, prevê quais horários e dias tendem a ser mais tranquilos. Assim, você pode <span class="text-bold">escolher o melhor momento</span> para ir ao hospital e <Span class="text-bold">evitar filas</Span>.
                     </p>
                 </div>
+<<<<<<< HEAD
             </div>
             <div class="mid-right">
                 <img src="/img/Fila.png" class="fila" alt="Fila Hospitalar">
@@ -92,14 +106,37 @@
                     </div>
             </div>
             <div class="graphics-right"></div>
+=======
+                <img src="./img/Fila.png" alt="Fila de espera">
+            </section>
+            <section class="section-02">
+                <h1 class="title-waiting">Pronto-socorro</h1>
+                <article class="waiting-list">
+                    <h2>Pessoas aguardando</h2>
+                    <div class="card-waiting">
+                        <h1 id="waiting" class="waiting">24</h1>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <div>
+            <footer class="footer-bg">
+                <div class="footer-container">
+                    <h1 class="title">Zero Fila Med</h1>
+                    <div class="footer-info">
+                        <ul>
+                            <li><a class="location" href="https://maps.app.goo.gl/qtb4c8YVYSbVbt4eA"><img src="img/icon-location.svg" alt="ícone localização">R. Ângelo Melão, 790 - Jardim das Paineiras, Três Lagoas - MS</a></li>
+                            <li><a class="call" href="tel:+556799999999"><img src="img/icon-call.svg" alt="ícone ligar">(67) 9999-9999</a></li>
+                            <li><a class="mail" href="mailto:zero.fila.med@mail.com"><img src="img/icon-mail.svg" alt="ícone e-mail">zero.fila.med@mail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="copyright">Copyright © 2025 • Zero Fila Med.</p>
+            </footer>
+>>>>>>> dev/Dirceu
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function mudarTexto(texto) {
-            document.getElementById('filtroBtn').innerText = texto;
-        }
-    </script>
 </body>
+
 </html>

@@ -1,4 +1,4 @@
-# Zero Fila MEd ([Click Here](#))
+# Zero Fila Med ([Click Here](#))
 
 ![Preview](./img/preview-desktop.png)
 
