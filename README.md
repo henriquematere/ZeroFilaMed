@@ -1,4 +1,4 @@
-# Zero Fila Med ([Click Here](#))
+# Zero Fila Med ([Click Here](https://zero-fila-med.vercel.app/))
 
 ![Preview](./img/preview-desktop.png)
 
@@ -20,4 +20,4 @@ O objetivo do projeto é criar um website de "Fila de espera" para o pronto soco
 
 ## Acessar minha resolução
 
-Eu hospedei este projeto com a ajuda da [Vercel](https://vercel.com/), para acessar minha resolução deste desafio [Clique Aqui](#)
+Eu hospedei este projeto com a ajuda da [Vercel](https://vercel.com/), para acessar minha resolução deste desafio [Clique Aqui](https://zero-fila-med.vercel.app/)
