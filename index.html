@@ -4,61 +4,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Zero Fila Med</title>
-    <meta name="description" content="monitora em tempo real quantas pessoas estão no hospital.">
+    <meta name="description" content="Monitore em tempo real o fluxo de pacientes no hospital e evite filas.">
 
+    <!-- Favicon -->
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="./style/styles.css">
 
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair:wght@900&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container">
-        <header>
+    <!-- Cabeçalh -->
+    <header class="header-bg">
+        <div class="container">
             <h1 class="title">Zero Fila Med</h1>
-        </header>
+        </div>
+    </header>
 
-        <main>
-            <section class="section-01">
-                <div>
-                    <h2 class="title-about">O que é<br><span class="title">Zero Fila Med</span>?</h2>
-                    <p class="text-about">
-                        É um sistema que monitora em tempo real quantas pessoas estão no hospital. Além disso, gera gráficos diários mostrando o fluxo de atendimento e, com base no histórico, prevê quais horários e dias tendem a ser mais tranquilos. Assim, você pode <span class="text-bold">escolher o melhor momento</span> para ir ao hospital e <Span class="text-bold">evitar filas</Span>.
-                    </p>
-                </div>
-                <img src="./img/Fila.png" alt="Fila de espera">
-            </section>
-            <section class="section-02">
+    <!-- Conteúdo principal -->
+    <main class="container">
+        <!-- Seção Sobre -->
+        <section class="section-01 card">
+            <div>
+                <h2 class="title-about">O que é<br><span class="title">Zero Fila Med</span>?</h2>
+                <p class="text-about">
+                    É um sistema que monitora em tempo real quantas pessoas estão no hospital. Além disso, gera gráficos diários mostrando o fluxo de atendimento e, com base no histórico, prevê quais horários e dias tendem a ser mais tranquilos. Assim, você pode <span class="text-bold">escolher o melhor momento</span> para ir ao hospital e <span class="text-bold">evitar filas</span>.
+                </p>
+            </div>
+            <img src="./img/Fila.png" alt="Imagem de um corredor de hospital" class="about-image">
+        </section>
+
+        <!-- Seção Principal do Dashboard -->
+        <section class="section-02">
+            <div class="dashboard-header">
                 <h1 class="title-waiting">Pronto-socorro</h1>
-                <article class="waiting-list">
+                <div class="card-waiting">
                     <h2>Pessoas aguardando</h2>
-                    <div class="card-waiting">
-                        <h1 id="waiting" class="waiting">24</h1>
-                    </div>
-                </article>
-            </section>
-        </main>
+                    <h1 id="pessoas-aguardando" class="waiting">--</h1>
+                </div>
+            </div>
 
-        <div>
-            <footer class="footer-bg">
-                <div class="footer-container">
-                    <h1 class="title">Zero Fila Med</h1>
-                    <div class="footer-info">
-                        <ul>
-                            <li><a class="location" href="https://maps.app.goo.gl/qtb4c8YVYSbVbt4eA"><img src="img/icon-location.svg" alt="ícone localização">R. Ângelo Melão, 790 - Jardim das Paineiras, Três Lagoas - MS</a></li>
-                            <li><a class="call" href="tel:+556799999999"><img src="img/icon-call.svg" alt="ícone ligar">(67) 9999-9999</a></li>
-                            <li><a class="mail" href="mailto:zero.fila.med@mail.com"><img src="img/icon-mail.svg" alt="ícone e-mail">zero.fila.med@mail.com</a></li>
+            <!-- Painel de Projeção e Gráficos -->
+            <div class="projection-panel card">
+                <div class="title-container">
+                    <h2 class="title-projection">Análise de Fluxo</h2>
+                    <div class="filter-dropdown-container">
+                        <button id="filter-button" class="filter-button">Filtrar Período</button>
+                        <ul id="filter-options" class="filter-dropdown">
+                            <li data-filter="12h">Últimas 12 horas</li>
+                            <li data-filter="24h">Últimas 24 horas</li>
+                            <li data-filter="semana">Última Semana</li>
+                            <li data-filter="mes">Último Mês</li>
                         </ul>
                     </div>
                 </div>
-                <p class="copyright">Copyright © 2025 • Zero Fila Med.</p>
-            </footer>
+
+                <div class="cards-container">
+                    <div class="card-info">
+                        <h3 id="card-titulo-periodo" class="card-title">CARREGANDO...</h3>
+                        <div class="info-row">
+                            <span>Total de Atendimentos</span>
+                            <span id="card-atendimentos-periodo" class="data-value">--</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Tempo Médio de Espera</span>
+                            <span id="card-estimativa-periodo" class="data-value">-- min</span>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">PROJEÇÃO (PRÓXIMAS HORAS)</h3>
+                        <div class="info-row">
+                            <span>Horário de Pico Estimado</span>
+                            <span id="projecao-pico" class="data-value">20:00</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Fluxo Esperado</span>
+                            <span id="projecao-fluxo" class="data-value">Alto</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 class="card-title">Atendimentos vs. Tempo Médio</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="atendimentoChart"></canvas>
+                    </div>
+                </div>
+
+                <p id="update-info" class="update-info">Buscando dados...</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer-bg">
+        <div class="container">
+            <div class="footer-container">
+                <h1 class="title">Zero Fila Med</h1>
+                <div class="footer-info">
+                    <ul>
+                        <li><a class="location" href="#"><img src="https://img.icons8.com/ios/50/1351b4/marker--v1.png" alt="Ícone de localização">R. Ângelo Melão, 790 - Três Lagoas, MS</a></li>
+                        <li><a class="call" href="tel:+556799999999"><img src="https://img.icons8.com/ios/50/1351b4/phone.png" alt="Ícone de telefone">(67) 9999-9999</a></li>
+                        <li><a class="mail" href="mailto:contato@zerofilamed.com"><img src="https://img.icons8.com/ios/50/1351b4/mail.png" alt="Ícone de e-mail">contato@zerofilamed.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p class="copyright">Copyright © 2025 • Zero Fila Med.</p>
         </div>
-    </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
