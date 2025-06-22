@@ -11,28 +11,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateInfoEl = document.getElementById('update-info');
   const chartCanvas = document.getElementById('atendimentoChart');
 
-  // Variável para guardar o estado atual do filtro e do timer
   let currentPeriodo = '12h';
   let updateInterval;
 
   // --- LÓGICA DO MENU DE FILTRO ---
   filterButton.addEventListener('click', (event) => {
-    event.stopPropagation(); // Impede que o clique feche o menu imediatamente
+    event.stopPropagation();
     filterOptions.classList.toggle('show');
   });
 
-  // Fecha o dropdown se o usuário clicar fora dele
   window.addEventListener('click', () => {
     if (filterOptions.classList.contains('show')) {
       filterOptions.classList.remove('show');
     }
   });
 
-  // Adiciona evento de clique para cada opção do filtro
   filterOptions.addEventListener('click', (event) => {
     if (event.target.tagName === 'LI') {
       currentPeriodo = event.target.dataset.filter;
-      updateDashboardData(); // Busca e atualiza os dados com o novo filtro
+      updateDashboardData();
     }
   });
 
@@ -95,23 +92,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- LÓGICA DE DADOS (API E ATUALIZAÇÃO) ---
 
-  /**
-   * Ponto Central para buscar os dados e atualizar a UI.
-   */
   async function updateDashboardData() {
     try {
-      setLoadingState(true); // Ativa o estado de carregamento
+      setLoadingState(true);
 
-      // A chamada à função isolada que busca os dados.
       const data = await fetchDataFromAPI(currentPeriodo);
 
-      // Atualiza todos os elementos da página com os novos dados
       updateUI(data);
     } catch (error) {
       console.error('Falha ao buscar ou atualizar dados:', error);
       updateInfoEl.textContent = 'Erro ao carregar dados. Tente novamente.';
     } finally {
-      setLoadingState(false); // Desativa o estado de carregamento
+      setLoadingState(false);
     }
   }
 
@@ -123,11 +115,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ----- INÍCIO DO CÓDIGO DE SIMULAÇÃO (SUBSTITUIR ESTE BLOCO) -----
 
-    // Simula um atraso de rede
     await new Promise((resolve) => setTimeout(resolve, 750));
 
     let labels, numPontos;
     let tituloCard = '';
+    const meses = [
+      'Jan',
+      'Fev',
+      'Mar',
+      'Abr',
+      'Mai',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Set',
+      'Out',
+      'Nov',
+      'Dez',
+    ];
 
     switch (periodo) {
       case '24h':
@@ -147,6 +152,29 @@ document.addEventListener('DOMContentLoaded', () => {
         tituloCard = 'ÚLTIMO MÊS';
         numPontos = 4;
         labels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
+        break;
+      case '3m':
+        tituloCard = 'ÚLTIMOS 3 MESES';
+        numPontos = 3;
+        labels = Array.from(
+          { length: numPontos },
+          (_, i) =>
+            meses[(new Date().getMonth() - (numPontos - 1 - i) + 12) % 12],
+        );
+        break;
+      case '6m':
+        tituloCard = 'ÚLTIMOS 6 MESES';
+        numPontos = 6;
+        labels = Array.from(
+          { length: numPontos },
+          (_, i) =>
+            meses[(new Date().getMonth() - (numPontos - 1 - i) + 12) % 12],
+        );
+        break;
+      case 'ano':
+        tituloCard = 'ÚLTIMO ANO';
+        numPontos = 12;
+        labels = meses;
         break;
       case '12h':
       default:
@@ -190,26 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     return simulatedData;
     // ----- FIM DO CÓDIGO DE SIMULAÇÃO -----
-
-    /*
-     * Exemplo de como seria com uma API real:
-     * * try {
-     * const response = await fetch(`https://sua-api.com/dados?periodo=${periodo}`);
-     * if (!response.ok) {
-     * throw new Error(`Erro na API: ${response.statusText}`);
-     * }
-     * const data = await response.json();
-     * return data;
-     * } catch (error) {
-     * console.error("Não foi possível conectar à API:", error);
-     * throw error; // Propaga o erro para ser tratado pela função que chamou
-     * }
-     */
   }
 
-  /**
-   * Atualiza todos os elementos visuais com os dados recebidos.
-   */
   function updateUI(data) {
     pessoasAguardandoEl.textContent = data.pessoasAguardando;
     cardTituloPeriodoEl.textContent = data.cardPeriodo.titulo;
@@ -221,13 +231,9 @@ document.addEventListener('DOMContentLoaded', () => {
     atendimentoChart.update();
   }
 
-  /**
-   * Controla o estado de carregamento da UI
-   */
   function setLoadingState(isLoading) {
     if (isLoading) {
       updateInfoEl.textContent = 'Buscando dados atualizados...';
-      // Poderia adicionar uma classe para "embaçar" os dados antigos
       document.querySelector('.projection-panel').style.opacity = '0.7';
     } else {
       const now = new Date();
@@ -241,8 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- INICIALIZAÇÃO ---
   updateDashboardData(); // Carga inicial dos dados
 
-  // Limpa o intervalo anterior antes de criar um novo
   if (updateInterval) clearInterval(updateInterval);
-  // Atualiza a cada 60 segundos
   updateInterval = setInterval(updateDashboardData, 60000);
 });
