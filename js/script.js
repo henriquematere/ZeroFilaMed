@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   };
-
+  
   const atendimentosChart = createBarChart(atendimentosChartCanvas);
   const tempoMedioChart = createBarChart(tempoMedioChartCanvas);
 
@@ -97,6 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
       'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez',
     ];
 
+    let atendimentosBase = 50;
+    let tempoBase = 40;
+
     switch (periodo) {
       case '24h':
         tituloCard = 'ÚLTIMAS 24 HORAS';
@@ -107,26 +110,35 @@ document.addEventListener('DOMContentLoaded', () => {
         tituloCard = 'ÚLTIMA SEMANA';
         numPontos = 7;
         labels = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+        atendimentosBase = 400;
         break;
       case 'mes':
         tituloCard = 'ÚLTIMO MÊS';
         numPontos = 4;
         labels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
+        atendimentosBase = 2000;
+        tempoBase = 60;
         break;
       case '3m':
         tituloCard = 'ÚLTIMOS 3 MESES';
         numPontos = 3;
         labels = Array.from({ length: numPontos }, (_, i) => meses[(new Date().getMonth() - (numPontos - 1 - i) + 12) % 12]);
+        atendimentosBase = 8000;
+        tempoBase = 80;
         break;
       case '6m':
         tituloCard = 'ÚLTIMOS 6 MESES';
         numPontos = 6;
         labels = Array.from({ length: numPontos }, (_, i) => meses[(new Date().getMonth() - (numPontos - 1 - i) + 12) % 12]);
+        atendimentosBase = 8500;
+        tempoBase = 90;
         break;
       case 'ano':
         tituloCard = 'ÚLTIMO ANO';
         numPontos = 12;
         labels = meses;
+        atendimentosBase = 9000;
+        tempoBase = 120;
         break;
       case '12h':
       default:
@@ -135,16 +147,17 @@ document.addEventListener('DOMContentLoaded', () => {
         labels = Array.from({ length: numPontos }, (_, i) => `${String(new Date().getHours() - (numPontos - i - 1) * 2).padStart(2, '0')}:00`);
         break;
     }
-
-    const atendimentosGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * 50) + 10);
-    const tempoMedioGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * 40) + 20);
+    
+    const atendimentosGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * (atendimentosBase * 0.5)) + (atendimentosBase * 0.8));
+    const tempoMedioGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * 20) + (tempoBase - 10));
+    
     const totalAtendimentos = atendimentosGrafico.reduce((a, b) => a + b, 0);
 
     const simulatedData = {
       pessoasAguardando: Math.floor(Math.random() * 30),
       informacoesGerais: {
-        tempoConsulta: Math.floor(Math.random() * 20) + 15, // entre 15 e 35 min
-        medicosPlantao: Math.floor(Math.random() * 4) + 2, // entre 2 e 5 medicos
+        tempoConsulta: Math.floor(Math.random() * 20) + 15,
+        medicosPlantao: Math.floor(Math.random() * 4) + 2,
       },
       cardPeriodo: {
         titulo: tituloCard,
@@ -172,12 +185,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     atendimentosChart.data.labels = labels;
     atendimentosChart.data.datasets[0].data = data.grafico.atendimentos;
-    atendimentosChart.data.datasets[0].label = 'Nº de Atendimentos'; // Rótulo para o tooltip
+    atendimentosChart.data.datasets[0].label = 'Nº de Atendimentos';
     atendimentosChart.update();
 
     tempoMedioChart.data.labels = labels;
     tempoMedioChart.data.datasets[0].data = data.grafico.tempoMedio;
-    tempoMedioChart.data.datasets[0].label = 'Minutos'; // Rótulo para o tooltip
+    tempoMedioChart.data.datasets[0].label = 'Minutos';
     tempoMedioChart.update();
 
     const now = new Date();
