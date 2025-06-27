@@ -244,14 +244,15 @@ main.container {
 }
 
 .charts-grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 1rem;
 }
 
 .chart-container {
   width: 100%;
+  min-width: 0;
 }
 
 .chart-wrapper {
@@ -342,10 +343,11 @@ main.container {
 }
 
 /* === MEDIA QUERIES === */
-@media (max-width: 850px) {
+@media (max-width: 1024px) {
+    .cards-container,
     .charts-grid-container {
         grid-template-columns: 1fr;
-        gap: 4rem;
+        gap: 2.5rem;
     }
 }
 
@@ -388,7 +390,21 @@ main.container {
   }
 
   .chart-wrapper {
-    min-height: 280px;
-    height: 45vh;
+    min-height: 250px;
+    height: auto;
+    aspect-ratio: 1 / 1;
   }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .card {
+        padding: 1.5rem;
+    }
+    .chart-wrapper {
+        aspect-ratio: 1 / 1.2;
+    }
 }

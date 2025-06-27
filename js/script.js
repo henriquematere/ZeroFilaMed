@@ -69,14 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const atendimentosChart = createBarChart(atendimentosChartCanvas);
   const tempoMedioChart = createBarChart(tempoMedioChartCanvas);
 
-
   // --- LÓGICA DE DADOS (API E ATUALIZAÇÃO) ---
   async function updateDashboardData() {
     try {
       setLoadingState(true);
-
       const data = await fetchDataFromAPI(currentPeriodo);
-
       updateUI(data);
     } catch (error) {
       console.error('Falha ao buscar ou atualizar dados:', error);
@@ -87,12 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function fetchDataFromAPI(periodo) {
-    console.log(`Buscando dados para o período: ${periodo}`);
-
     await new Promise((resolve) => setTimeout(resolve, 750));
 
     let labels, numPontos;
-    let tituloCard = '';
     const meses = [
       'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez',
     ];
@@ -102,52 +96,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     switch (periodo) {
       case '24h':
-        tituloCard = 'ÚLTIMAS 24 HORAS';
-        numPontos = 8;
-        labels = Array.from({ length: numPontos }, (_, i) => `${String(i * 3).padStart(2, '0')}:00`);
+        labels = Array.from({ length: 8 }, (_, i) => `${String(i * 3).padStart(2, '0')}:00`);
         break;
       case 'semana':
-        tituloCard = 'ÚLTIMA SEMANA';
-        numPontos = 7;
         labels = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
         atendimentosBase = 400;
         break;
       case 'mes':
-        tituloCard = 'ÚLTIMO MÊS';
-        numPontos = 4;
         labels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
         atendimentosBase = 2000;
         tempoBase = 60;
         break;
       case '3m':
-        tituloCard = 'ÚLTIMOS 3 MESES';
-        numPontos = 3;
-        labels = Array.from({ length: numPontos }, (_, i) => meses[(new Date().getMonth() - (numPontos - 1 - i) + 12) % 12]);
+        labels = Array.from({ length: 3 }, (_, i) => meses[(new Date().getMonth() - (2 - i) + 12) % 12]);
         atendimentosBase = 8000;
         tempoBase = 80;
         break;
       case '6m':
-        tituloCard = 'ÚLTIMOS 6 MESES';
-        numPontos = 6;
-        labels = Array.from({ length: numPontos }, (_, i) => meses[(new Date().getMonth() - (numPontos - 1 - i) + 12) % 12]);
+        labels = Array.from({ length: 6 }, (_, i) => meses[(new Date().getMonth() - (5 - i) + 12) % 12]);
         atendimentosBase = 8500;
         tempoBase = 90;
         break;
       case 'ano':
-        tituloCard = 'ÚLTIMO ANO';
-        numPontos = 12;
         labels = meses;
         atendimentosBase = 9000;
-        tempoBase = 120;
+        tempoBase = 145;
         break;
       case '12h':
       default:
-        tituloCard = 'ÚLTIMAS 12 HORAS';
-        numPontos = 6;
-        labels = Array.from({ length: numPontos }, (_, i) => `${String(new Date().getHours() - (numPontos - i - 1) * 2).padStart(2, '0')}:00`);
+        labels = Array.from({ length: 6 }, (_, i) => `${String(new Date().getHours() - (5 - i) * 2).padStart(2, '0')}:00`);
         break;
     }
-    
+    numPontos = labels.length;
+
     const atendimentosGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * (atendimentosBase * 0.5)) + (atendimentosBase * 0.8));
     const tempoMedioGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * 20) + (tempoBase - 10));
     
@@ -160,8 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
         medicosPlantao: Math.floor(Math.random() * 4) + 2,
       },
       cardPeriodo: {
-        titulo: tituloCard,
-        atendimentos: totalAtendimentos,
+        titulo: `ÚLTIMAS ${periodo === 'semana' || periodo === 'mes' ? '' : ' '}${periodo.replace('h', ' HORAS').replace('m', ' MESES').toUpperCase()}`,
+        atendimentos: totalAtendimentos.toLocaleString('pt-BR'),
         estimativaMedia: Math.floor(tempoMedioGrafico.reduce((a, b) => a + b, 0) / numPontos),
       },
       grafico: {
@@ -170,6 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
         tempoMedio: tempoMedioGrafico,
       },
     };
+    if (periodo === 'semana') simulatedData.cardPeriodo.titulo = 'ÚLTIMA SEMANA';
+    if (periodo === 'mes') simulatedData.cardPeriodo.titulo = 'ÚLTIMO MÊS';
+    if (periodo === 'ano') simulatedData.cardPeriodo.titulo = 'ÚLTIMO ANO';
+
     return simulatedData;
   }
 
@@ -208,9 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- INICIALIZAÇÃO ---
   updateDashboardData();
-
   if (updateInterval) clearInterval(updateInterval);
   updateInterval = setInterval(updateDashboardData, 60000);
 });
