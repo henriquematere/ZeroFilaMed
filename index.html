@@ -7,50 +7,45 @@
     <title>Zero Fila Med</title>
     <meta name="description" content="Monitore em tempo real o fluxo de pacientes no hospital e evite filas.">
 
-    <!-- Favicon -->
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
 
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="./style/styles.css">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair:wght@900&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Cabeçalho -->
     <header class="header-bg">
         <div class="container">
             <h1 class="title">Zero Fila Med</h1>
         </div>
     </header>
 
-    <!-- Conteúdo principal -->
     <main class="container">
-        <!-- Seção Sobre -->
-        <section class="section-01 card">
-            <div>
-                <h2 class="title-about">O que é<br><span class="title">Zero Fila Med</span>?</h2>
-                <p class="text-about">
-                    É um sistema que monitora em tempo real quantas pessoas estão no hospital. Além disso, gera gráficos diários mostrando o fluxo de atendimento e, com base no histórico, prevê quais horários e dias tendem a ser mais tranquilos. Assim, você pode <span class="text-bold">escolher o melhor momento</span> para ir ao hospital e <span class="text-bold">evitar filas</span>.
-                </p>
-            </div>
-            <img src="./img/fila-02.png" alt="Imagem de um corredor de hospital" class="about-image">
-        </section>
-
-        <!-- Seção Principal do Dashboard -->
-        <section class="section-02">
+        <section class="section-01">
             <div class="dashboard-header">
                 <h1 class="title-waiting">Pronto-socorro</h1>
-                <div class="card-waiting">
-                    <h2>Pessoas aguardando</h2>
-                    <h1 id="pessoas-aguardando" class="waiting">--</h1>
+                <div class="header-cards-container">
+                    <div class="card-waiting">
+                        <h2>Pessoas aguardando</h2>
+                        <h1 id="pessoas-aguardando" class="waiting">--</h1>
+                    </div>
+                    <div class="card-waiting">
+                        <h2>Status do Plantão</h2>
+                        <div class="info-geral">
+                            <span>Duração Média de Consulta:</span>
+                            <strong id="tempo-consulta">-- min</strong>
+                        </div>
+                        <div class="info-geral">
+                            <span>Médicos de Plantão:</span>
+                            <strong id="medicos-plantao">--</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Painel de Projeção e Gráficos -->
             <div class="projection-panel card">
                 <div class="title-container">
                     <h2 class="title-projection">Análise de Fluxo</h2>
@@ -103,9 +98,18 @@
                 <p id="update-info" class="update-info">Buscando dados...</p>
             </div>
         </section>
+
+        <section class="section-02 card">
+            <div>
+                <h2 class="title-about">O que é<br><span class="title">Zero Fila Med</span>?</h2>
+                <p class="text-about">
+                    É um sistema que monitora em tempo real quantas pessoas estão no hospital. Além disso, gera gráficos diários mostrando o fluxo de atendimento e, com base no histórico, prevê quais horários e dias tendem a ser mais tranquilos. Assim, você pode <span class="text-bold">escolher o melhor momento</span> para ir ao hospital e <span class="text-bold">evitar filas</span>.
+                </p>
+            </div>
+            <img src="./img/fila.png" alt="Médica atendendo paciente" class="about-image">
+        </section>
     </main>
 
-    <!-- Rodapé com fundo -->
     <footer class="footer-bg">
         <div class="container">
             <div class="footer-container">
