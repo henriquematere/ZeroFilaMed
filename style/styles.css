@@ -227,6 +227,7 @@ main.container {
   margin-bottom: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .info-row {
@@ -242,14 +243,21 @@ main.container {
   color: var(--color-11);
 }
 
+.charts-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 1rem;
+}
+
 .chart-container {
-  margin-top: 1rem;
+  width: 100%;
 }
 
 .chart-wrapper {
   position: relative;
-  height: 35vh;
-  min-height: 300px;
+  height: 30vh;
+  min-height: 250px;
 }
 
 .update-info {
@@ -291,8 +299,6 @@ main.container {
   object-fit: cover;
 }
 
-
-/* === RODAPÉ === */
 .footer-bg {
   background: var(--color-00);
   padding-top: 4rem;
@@ -336,6 +342,13 @@ main.container {
 }
 
 /* === MEDIA QUERIES === */
+@media (max-width: 850px) {
+    .charts-grid-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+}
+
 @media (max-width: 768px) {
   .section-02 {
     grid-template-columns: 1fr;

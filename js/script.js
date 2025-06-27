@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   const cardEstimativaEl = document.getElementById('card-estimativa-periodo');
   const updateInfoEl = document.getElementById('update-info');
-  const chartCanvas = document.getElementById('atendimentoChart');
+  const atendimentosChartCanvas = document.getElementById('atendimentosChart');
+  const tempoMedioChartCanvas = document.getElementById('tempoMedioChart');
 
   let currentPeriodo = '12h';
   let updateInterval;
@@ -35,65 +36,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- LÓGICA DO GRÁFICO (CHART.JS) ---
-  const ctx = chartCanvas.getContext('2d');
-  const atendimentoChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: [],
-      datasets: [
-        {
-          label: 'Atendimentos',
+  // --- LÓGICA DOS GRÁFICOS (CHART.JS) ---
+  const createBarChart = (canvas) => {
+    return new Chart(canvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [{
+          label: '',
           data: [],
           backgroundColor: '#1351b4',
-          yAxisID: 'yAtendimentos',
-          order: 2,
-        },
-        {
-          label: 'Tempo Médio (min)',
-          data: [],
-          backgroundColor: 'transparent',
-          borderColor: '#4978c5',
-          type: 'line',
-          yAxisID: 'yTempoMedio',
-          order: 1,
-          tension: 0.4,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: {
-        mode: 'index',
-        intersect: false,
+          borderRadius: 4,
+        }]
       },
-      scales: {
-        x: { grid: { display: false } },
-        yAtendimentos: {
-          position: 'left',
-          beginAtZero: true,
-          title: { display: true, text: 'Nº Atendimentos' },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
         },
-        yTempoMedio: {
-          position: 'right',
-          beginAtZero: true,
-          title: { display: true, text: 'Tempo (min)' },
-          grid: { drawOnChartArea: false },
-        },
-      },
-      plugins: {
-        legend: { position: 'bottom' },
-        tooltip: {
-          titleFont: { weight: 'bold' },
-          bodyFont: { size: 14 },
-        },
-      },
-    },
-  });
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  };
+
+  const atendimentosChart = createBarChart(atendimentosChartCanvas);
+  const tempoMedioChart = createBarChart(tempoMedioChartCanvas);
+
 
   // --- LÓGICA DE DADOS (API E ATUALIZAÇÃO) ---
-
   async function updateDashboardData() {
     try {
       setLoadingState(true);
@@ -109,9 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /**
-   * ÁREA DE CONEXÃO COM O BANCO DE DADOS
-   */
   async function fetchDataFromAPI(periodo) {
     console.log(`Buscando dados para o período: ${periodo}`);
 
@@ -193,10 +167,21 @@ document.addEventListener('DOMContentLoaded', () => {
     cardTituloPeriodoEl.textContent = data.cardPeriodo.titulo;
     cardAtendimentosEl.textContent = data.cardPeriodo.atendimentos;
     cardEstimativaEl.textContent = `${data.cardPeriodo.estimativaMedia} min`;
-    atendimentoChart.data.labels = data.grafico.labels;
-    atendimentoChart.data.datasets[0].data = data.grafico.atendimentos;
-    atendimentoChart.data.datasets[1].data = data.grafico.tempoMedio;
-    atendimentoChart.update();
+
+    const labels = data.grafico.labels;
+
+    atendimentosChart.data.labels = labels;
+    atendimentosChart.data.datasets[0].data = data.grafico.atendimentos;
+    atendimentosChart.data.datasets[0].label = 'Nº de Atendimentos'; // Rótulo para o tooltip
+    atendimentosChart.update();
+
+    tempoMedioChart.data.labels = labels;
+    tempoMedioChart.data.datasets[0].data = data.grafico.tempoMedio;
+    tempoMedioChart.data.datasets[0].label = 'Minutos'; // Rótulo para o tooltip
+    tempoMedioChart.update();
+
+    const now = new Date();
+    updateInfoEl.textContent = `Dados atualizados às ${now.toLocaleTimeString('pt-BR')}.`;
   }
 
   function setLoadingState(isLoading) {
