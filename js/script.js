@@ -69,7 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const atendimentosChart = createBarChart(atendimentosChartCanvas);
   const tempoMedioChart = createBarChart(tempoMedioChartCanvas);
 
+
   // --- LÓGICA DE DADOS (API E ATUALIZAÇÃO) ---
+
   async function updateDashboardData() {
     try {
       setLoadingState(true);
@@ -77,102 +79,50 @@ document.addEventListener('DOMContentLoaded', () => {
       updateUI(data);
     } catch (error) {
       console.error('Falha ao buscar ou atualizar dados:', error);
-      updateInfoEl.textContent = 'Erro ao carregar dados. Tente novamente.';
+      updateInfoEl.textContent = 'Erro ao conectar com o servidor.';
     } finally {
       setLoadingState(false);
     }
   }
 
   async function fetchDataFromAPI(periodo) {
-    await new Promise((resolve) => setTimeout(resolve, 750));
+    const apiUrl = `/api/dashboard-data?periodo=${periodo}`;
 
-    let labels, numPontos;
-    const meses = [
-      'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez',
-    ];
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`Erro na API: ${response.statusText}`);
+      }
+      const data = await response.json();
+      console.log('Dados recebidos da API:', data);
+      return data;
 
-    let atendimentosBase = 50;
-    let tempoBase = 40;
-
-    switch (periodo) {
-      case '24h':
-        labels = Array.from({ length: 8 }, (_, i) => `${String(i * 3).padStart(2, '0')}:00`);
-        break;
-      case 'semana':
-        labels = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-        atendimentosBase = 400;
-        break;
-      case 'mes':
-        labels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
-        atendimentosBase = 2000;
-        tempoBase = 60;
-        break;
-      case '3m':
-        labels = Array.from({ length: 3 }, (_, i) => meses[(new Date().getMonth() - (2 - i) + 12) % 12]);
-        atendimentosBase = 8000;
-        tempoBase = 80;
-        break;
-      case '6m':
-        labels = Array.from({ length: 6 }, (_, i) => meses[(new Date().getMonth() - (5 - i) + 12) % 12]);
-        atendimentosBase = 8500;
-        tempoBase = 90;
-        break;
-      case 'ano':
-        labels = meses;
-        atendimentosBase = 9000;
-        tempoBase = 145;
-        break;
-      case '12h':
-      default:
-        labels = Array.from({ length: 6 }, (_, i) => `${String(new Date().getHours() - (5 - i) * 2).padStart(2, '0')}:00`);
-        break;
+    } catch (error) {
+      console.error("Não foi possível buscar dados da API:", error);
+      return getEmptyDataStructure();
     }
-    numPontos = labels.length;
-
-    const atendimentosGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * (atendimentosBase * 0.5)) + (atendimentosBase * 0.8));
-    const tempoMedioGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * 20) + (tempoBase - 10));
-    
-    const totalAtendimentos = atendimentosGrafico.reduce((a, b) => a + b, 0);
-
-    const simulatedData = {
-      pessoasAguardando: Math.floor(Math.random() * 30),
-      informacoesGerais: {
-        tempoConsulta: Math.floor(Math.random() * 20) + 15,
-        medicosPlantao: Math.floor(Math.random() * 4) + 2,
-      },
-      cardPeriodo: {
-        titulo: `ÚLTIMAS ${periodo === 'semana' || periodo === 'mes' ? '' : ' '}${periodo.replace('h', ' HORAS').replace('m', ' MESES').toUpperCase()}`,
-        atendimentos: totalAtendimentos.toLocaleString('pt-BR'),
-        estimativaMedia: Math.floor(tempoMedioGrafico.reduce((a, b) => a + b, 0) / numPontos),
-      },
-      grafico: {
-        labels: labels,
-        atendimentos: atendimentosGrafico,
-        tempoMedio: tempoMedioGrafico,
-      },
-    };
-    if (periodo === 'semana') simulatedData.cardPeriodo.titulo = 'ÚLTIMA SEMANA';
-    if (periodo === 'mes') simulatedData.cardPeriodo.titulo = 'ÚLTIMO MÊS';
-    if (periodo === 'ano') simulatedData.cardPeriodo.titulo = 'ÚLTIMO ANO';
-
-    return simulatedData;
   }
 
   function updateUI(data) {
-    pessoasAguardandoEl.textContent = data.pessoasAguardando;
-    tempoConsultaEl.textContent = `${data.informacoesGerais.tempoConsulta} min`;
+    // Atualiza os cards de informação
+    pessoasAguardandoEl.textContent = data.informacoesGerais.pessoasAguardando;
+    tempoConsultaEl.textContent = `${data.informacoesGerais.duracaoMediaConsulta} min`;
     medicosPlantaoEl.textContent = data.informacoesGerais.medicosPlantao;
+    
     cardTituloPeriodoEl.textContent = data.cardPeriodo.titulo;
-    cardAtendimentosEl.textContent = data.cardPeriodo.atendimentos;
-    cardEstimativaEl.textContent = `${data.cardPeriodo.estimativaMedia} min`;
+    cardAtendimentosEl.textContent = data.cardPeriodo.totalAtendimentos;
+    cardEstimativaEl.textContent = `${data.cardPeriodo.tempoMedioEspera} min`;
 
+    // Atualiza os dados dos gráficos
     const labels = data.grafico.labels;
 
+    // Gráfico de Atendimentos
     atendimentosChart.data.labels = labels;
     atendimentosChart.data.datasets[0].data = data.grafico.atendimentos;
     atendimentosChart.data.datasets[0].label = 'Nº de Atendimentos';
     atendimentosChart.update();
 
+    // Gráfico de Tempo Médio
     tempoMedioChart.data.labels = labels;
     tempoMedioChart.data.datasets[0].data = data.grafico.tempoMedio;
     tempoMedioChart.data.datasets[0].label = 'Minutos';
@@ -193,7 +143,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function getEmptyDataStructure() {
+      return {
+          informacoesGerais: { pessoasAguardando: 0, duracaoMediaConsulta: 0, medicosPlantao: 0 },
+          cardPeriodo: { titulo: "Erro de conexão", totalAtendimentos: 0, tempoMedioEspera: 0 },
+          grafico: { labels: [], atendimentos: [], tempoMedio: [] }
+      };
+  }
+
+  // --- INICIALIZAÇÃO ---
   updateDashboardData();
+
   if (updateInterval) clearInterval(updateInterval);
   updateInterval = setInterval(updateDashboardData, 60000);
 });
