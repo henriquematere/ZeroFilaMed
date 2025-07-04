@@ -63,7 +63,7 @@ a {
   box-shadow: var(--color-shadow);
 }
 
-/* === CABEÇALHO === */
+
 .header-bg {
   background: var(--color-00);
   padding-top: 2rem;
@@ -81,7 +81,6 @@ a {
   color: var(--color-p01);
 }
 
-/* === CONTEÚDO PRINCIPAL === */
 main.container {
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -90,39 +89,6 @@ main.container {
   gap: 3rem;
 }
 
-/* Seção Sobre */
-.section-01 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 3rem;
-}
-
-.title-about {
-  font-size: clamp(3.2rem, 5vw, 4.2rem);
-  color: var(--color-12);
-  line-height: 1.2;
-}
-
-.text-about {
-  font-family: 'Roboto', sans-serif;
-  font-size: clamp(1.6rem, 2.5vw, 1.8rem);
-  line-height: 1.6;
-  margin-top: 1rem;
-}
-
-.text-about .text-bold {
-  font-weight: 700;
-  color: var(--color-11);
-}
-
-.about-image {
-  border-radius: 0.8rem;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Seção Dashboard */
 .dashboard-header {
   margin-bottom: 3rem;
 }
@@ -131,19 +97,25 @@ main.container {
   font-weight: 700;
   font-size: clamp(2.8rem, 4vw, 3.6rem);
   color: var(--color-11);
-  margin-bottom: 2rem; /* Adiciona espaço entre o título e o card */
+  margin-bottom: 2rem;
+}
+
+.header-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
 }
 
 .card-waiting {
-  padding: 1rem 2rem;
+  padding: 1.5rem 2rem;
   background: var(--color-00);
   border-radius: 1.2rem;
   box-shadow: var(--color-shadow);
   text-align: center;
-  width: 100%;
-  max-width: 400px;
-  margin-left: auto; /* Centraliza o card */
-  margin-right: auto; /* Centraliza o card */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .card-waiting h2 {
@@ -157,7 +129,19 @@ main.container {
   color: var(--color-p01);
 }
 
-/* Painel de Projeção */
+.info-geral {
+    font-size: 1.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.info-geral strong {
+    font-size: 2rem;
+    color: var(--color-p01);
+}
+
 .projection-panel {
   display: flex;
   flex-direction: column;
@@ -178,7 +162,6 @@ main.container {
   color: var(--color-11);
 }
 
-/* Filtro */
 .filter-dropdown-container {
   position: relative;
 }
@@ -225,7 +208,6 @@ main.container {
   background-color: var(--color-01);
 }
 
-/* Cards de Informação */
 .cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -245,6 +227,7 @@ main.container {
   margin-bottom: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .info-row {
@@ -260,15 +243,22 @@ main.container {
   color: var(--color-11);
 }
 
-/* Gráfico */
-.chart-container {
+.charts-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
   margin-top: 1rem;
+}
+
+.chart-container {
+  width: 100%;
+  min-width: 0;
 }
 
 .chart-wrapper {
   position: relative;
-  height: 35vh;
-  min-height: 300px;
+  height: 30vh;
+  min-height: 250px;
 }
 
 .update-info {
@@ -279,7 +269,37 @@ main.container {
   margin-top: 1rem;
 }
 
-/* === RODAPÉ === */
+.section-02 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 3rem;
+}
+
+.title-about {
+  font-size: clamp(3.2rem, 5vw, 4.2rem);
+  color: var(--color-12);
+  line-height: 1.2;
+}
+
+.text-about {
+  font-family: 'Roboto', 'sans-serif';
+  font-size: clamp(1.6rem, 2.5vw, 1.8rem);
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+.text-about .text-bold {
+  font-weight: 700;
+  color: var(--color-11);
+}
+
+.about-image {
+  border-radius: 0.8rem;
+  height: 100%;
+  object-fit: cover;
+}
+
 .footer-bg {
   background: var(--color-00);
   padding-top: 4rem;
@@ -323,14 +343,26 @@ main.container {
 }
 
 /* === MEDIA QUERIES === */
+@media (max-width: 1024px) {
+    .cards-container,
+    .charts-grid-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
 @media (max-width: 768px) {
-  .section-01 {
+  .section-02 {
     grid-template-columns: 1fr;
   }
 
   .footer-container {
     flex-direction: column;
     text-align: center;
+  }
+  
+  .header-cards-container {
+    grid-template-columns: 1fr;
   }
 
   .card,
@@ -358,7 +390,21 @@ main.container {
   }
 
   .chart-wrapper {
-    min-height: 280px;
-    height: 45vh;
+    min-height: 250px;
+    height: auto;
+    aspect-ratio: 1 / 1;
   }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .card {
+        padding: 1.5rem;
+    }
+    .chart-wrapper {
+        aspect-ratio: 1 / 1.2;
+    }
 }
