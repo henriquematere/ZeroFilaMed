@@ -7,9 +7,9 @@
     <title>Zero Fila Med</title>
     <meta name="description" content="Monitore em tempo real o fluxo de pacientes no hospital e evite filas.">
 
-    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
 
-    <link rel="stylesheet" href="./style/styles.css">
+    <link rel="stylesheet" href="/static/style/styles.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,9 +76,9 @@
                         </div>
                     </div>
                     <div class="card-info">
-                        <h3 class="card-title">PROJEÇÃO (PRÓXIMAS HORAS)</h3>
+                        <h3 class="card-title">PROJEÇÃO</h3>
                         <div class="info-row">
-                            <span>Horário de Pico Estimado</span>
+                            <span id="projecao-pico-label">Horário de Pico Estimado</span>
                             <span id="projecao-pico" class="data-value">--</span>
                         </div>
                         <div class="info-row">
@@ -114,7 +114,7 @@
                     É um sistema que monitora em tempo real quantas pessoas estão no hospital. Além disso, gera gráficos diários mostrando o fluxo de atendimento e, com base no histórico, prevê quais horários e dias tendem a ser mais tranquilos. Assim, você pode <span class="text-bold">escolher o melhor momento</span> para ir ao hospital e <span class="text-bold">evitar filas</span>.
                 </p>
             </div>
-            <img src="./img/Fila.png" alt="Médica atendendo paciente" class="about-image">
+            <img src="/static/img/Fila.png" alt="Médica atendendo paciente" class="about-image">
         </section>
     </main>
 
@@ -124,9 +124,9 @@
                 <h1 class="title">Zero Fila Med</h1>
                 <div class="footer-info">
                     <ul>
-                        <li><a class="location" href="#"><img src="./img/icon-location.svg" alt="Ícone de localização">R. Ângelo Melão, 790 - Três Lagoas, MS</a></li>
-                        <li><a class="call" href="tel:+556799999999"><img src="./img/icon-call.svg" alt="Ícone de telefone">(67) 9999-9999</a></li>
-                        <li><a class="mail" href="mailto:contato@zerofilamed.com"><img src="./img/icon-mail.svg" alt="Ícone de e-mail">contato@zerofilamed.com</a></li>
+                        <li><a class="location" href="#"><img src="/static/img/icon-location.svg" alt="Ícone de localização">R. Ângelo Melão, 790 - Três Lagoas, MS</a></li>
+                        <li><a class="call" href="tel:+556799999999"><img src="/static/img/icon-call.svg" alt="Ícone de telefone">(67) 9999-9999</a></li>
+                        <li><a class="mail" href="mailto:contato@zerofilamed.com"><img src="/static/img/icon-mail.svg" alt="Ícone de e-mail">contato@zerofilamed.com</a></li>
                     </ul>
                 </div>
             </div>
@@ -135,7 +135,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./js/script.js"></script>
+    <script src="/static/js/script.js"></script>
 </body>
 
 </html>

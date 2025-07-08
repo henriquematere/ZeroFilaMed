@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardEstimativaEl = document.getElementById('card-estimativa-periodo');
   const projecaoPicoEl = document.getElementById('projecao-pico');
   const projecaoFluxoEl = document.getElementById('projecao-fluxo');
+  const projecaoPicoLabelEl = document.getElementById('projecao-pico-label');
   const updateInfoEl = document.getElementById('update-info');
   const atendimentosChartCanvas = document.getElementById('atendimentosChart');
   const tempoMedioChartCanvas = document.getElementById('tempoMedioChart');
@@ -86,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchDataFromAPI(periodo) {
     const apiUrl = `/api/dashboard-data?periodo=${periodo}`;
-
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) {
@@ -97,56 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return data;
     } catch (error) {
       console.error("Não foi possível buscar dados da API:", error);
-      return getSimulatedData(periodo);
+      updateInfoEl.textContent = 'Erro ao conectar com o servidor.';
+      return getEmptyDataStructure();
     }
   }
 
-// Função de simulação para desenvolvimento e fallback
-  function getSimulatedData(periodo) {
-    let labels, numPontos;
-    let tituloCard = '';
-    const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-    let atendimentosBase = 50;
-    let tempoBase = 40;
-    switch (periodo) {
-        case '24h': tituloCard = 'ÚLTIMAS 24 HORAS'; numPontos = 8; labels = Array.from({ length: numPontos }, (_, i) => `${String(i * 3).padStart(2, '0')}:00`); break;
-        case 'semana': tituloCard = 'ÚLTIMA SEMANA'; numPontos = 7; labels = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']; atendimentosBase = 400; break;
-        case 'mes': tituloCard = 'ÚLTIMO MÊS'; numPontos = 4; labels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4']; atendimentosBase = 2000; tempoBase = 60; break;
-        case '3m': tituloCard = 'ÚLTIMOS 3 MESES'; numPontos = 3; labels = Array.from({ length: numPontos }, (_, i) => meses[(new Date().getMonth() - (numPontos - 1 - i) + 12) % 12]); atendimentosBase = 8000; tempoBase = 80; break;
-        case '6m': tituloCard = 'ÚLTIMOS 6 MESES'; numPontos = 6; labels = Array.from({ length: numPontos }, (_, i) => meses[(new Date().getMonth() - (numPontos - 1 - i) + 12) % 12]); atendimentosBase = 8500; tempoBase = 90; break;
-        case 'ano': tituloCard = 'ÚLTIMO ANO'; numPontos = 12; labels = meses; atendimentosBase = 9000; tempoBase = 145; break;
-        case '12h': default: tituloCard = 'ÚLTIMAS 12 HORAS'; numPontos = 6; labels = Array.from({ length: numPontos }, (_, i) => `${String(new Date().getHours() - (numPontos - i - 1) * 2).padStart(2, '0')}:00`); break;
-    }
-    const atendimentosGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * (atendimentosBase * 0.5)) + (atendimentosBase * 0.8));
-    const tempoMedioGrafico = Array.from({ length: numPontos }, () => Math.floor(Math.random() * 20) + (tempoBase - 10));
-    const totalAtendimentos = atendimentosGrafico.reduce((a, b) => a + b, 0);
-
-    const fluxos = ['Baixo', 'Moderado', 'Alto'];
-    const picos = ['18:00', '19:00', '20:00', '21:00'];
-
-    return {
-      pessoasAguardando: Math.floor(Math.random() * 30),
-      informacoesGerais: {
-        duracaoMediaConsulta: Math.floor(Math.random() * 20) + 15,
-        medicosPlantao: Math.floor(Math.random() * 4) + 2,
-      },
-      cardPeriodo: {
-        titulo: tituloCard,
-        totalAtendimentos: totalAtendimentos.toLocaleString('pt-BR'),
-        tempoMedioEspera: Math.floor(tempoMedioGrafico.reduce((a, b) => a + b, 0) / numPontos),
-      },
-      projecao: {
-        horarioPico: picos[Math.floor(Math.random() * picos.length)],
-        fluxoEsperado: fluxos[Math.floor(Math.random() * fluxos.length)],
-      },
-      grafico: {
-        labels: labels,
-        atendimentos: atendimentosGrafico,
-        tempoMedio: tempoMedioGrafico,
-      },
-    };
-  }
-  
   function updateUI(data) {
     // Atualiza os cards de informação
     pessoasAguardandoEl.textContent = data.informacoesGerais.pessoasAguardando;
@@ -155,8 +110,19 @@ document.addEventListener('DOMContentLoaded', () => {
     cardTituloPeriodoEl.textContent = data.cardPeriodo.titulo;
     cardAtendimentosEl.textContent = data.cardPeriodo.totalAtendimentos;
     cardEstimativaEl.textContent = `${data.cardPeriodo.tempoMedioEspera} min`;
-    projecaoPicoEl.textContent = data.projecao.horarioPico;
+    projecaoPicoEl.textContent = data.projecao.horarioPico || "--";
     projecaoFluxoEl.textContent = data.projecao.fluxoEsperado;
+
+    // Atualiza o label do pico de acordo com o filtro
+    let picoLabel = "";
+    if (currentPeriodo === "12h" || currentPeriodo === "24h") {
+      picoLabel = "Horário de Pico Estimado";
+    } else if (currentPeriodo === "semana") {
+      picoLabel = "Dia de Pico Estimado";
+    } else {
+      picoLabel = "Mês de Pico Estimado";
+    }
+    projecaoPicoLabelEl.textContent = picoLabel;
 
     // Atualiza os dados dos gráficos
     const labels = data.grafico.labels;
@@ -185,12 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getEmptyDataStructure() {
-      return {
-          informacoesGerais: { pessoasAguardando: '--', duracaoMediaConsulta: '--', medicosPlantao: '--' },
-          cardPeriodo: { titulo: "Erro de conexão", totalAtendimentos: '--', tempoMedioEspera: '--' },
-          projecao: { horarioPico: '--', fluxoEsperado: '--' },
-          grafico: { labels: [], atendimentos: [], tempoMedio: [] }
-      };
+    return {
+      informacoesGerais: { pessoasAguardando: '--', duracaoMediaConsulta: '--', medicosPlantao: '--' },
+      cardPeriodo: { titulo: "Erro de conexão", totalAtendimentos: '--', tempoMedioEspera: '--' },
+      projecao: { horarioPico: '--', fluxoEsperado: '--' },
+      grafico: { labels: [], atendimentos: [], tempoMedio: [] }
+    };
   }
 
   // --- INICIALIZAÇÃO ---
