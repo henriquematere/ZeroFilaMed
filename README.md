@@ -1,6 +1,6 @@
 # Zero Fila Med ([Click Here](https://zero-fila-med.vercel.app/))
 
-![Preview](./img/preview-desktop.png)
+![image](https://github.com/user-attachments/assets/00da8179-96e9-4294-ba9b-6307c63432c4)
 
 ## SOBRE ESTE PROJETO!
 
