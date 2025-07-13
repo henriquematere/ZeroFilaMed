@@ -14,9 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateInfoEl = document.getElementById('update-info');
   const atendimentosChartCanvas = document.getElementById('atendimentosChart');
   const tempoMedioChartCanvas = document.getElementById('tempoMedioChart');
+  const filterSelectedLabel = document.getElementById('filter-selected-label');
 
   let currentPeriodo = '12h';
   let updateInterval;
+
+  // --- RÓTULOS DOS FILTROS ---
+  const filterLabels = {
+    '12h': 'Últimas 12 horas',
+    '24h': 'Últimas 24 horas',
+    'semana': 'Última Semana',
+    'mes': 'Último Mês',
+    '3m': 'Últimos 3 Meses',
+    '6m': 'Últimos 6 Meses',
+    'ano': 'Último Ano'
+  };
 
   // --- LÓGICA DO MENU DE FILTRO ---
   filterButton.addEventListener('click', (event) => {
@@ -33,9 +45,20 @@ document.addEventListener('DOMContentLoaded', () => {
   filterOptions.addEventListener('click', (event) => {
     if (event.target.tagName === 'LI') {
       currentPeriodo = event.target.dataset.filter;
+
+      // Remover active de todos e adicionar só no selecionado
+      filterOptions.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Atualiza o texto do botão
+      filterSelectedLabel.textContent = filterLabels[currentPeriodo];
+
       updateDashboardData();
     }
   });
+
+  // Inicializa o label do filtro selecionado
+  filterSelectedLabel.textContent = filterLabels[currentPeriodo];
 
   // --- LÓGICA DOS GRÁFICOS (CHART.JS) ---
   const createBarChart = (canvas) => {
@@ -119,6 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
       picoLabel = "Horário de Pico Estimado";
     } else if (currentPeriodo === "semana") {
       picoLabel = "Dia de Pico Estimado";
+    } else if (currentPeriodo === "mes") {
+      picoLabel = "Semana de Pico Estimado";
     } else {
       picoLabel = "Mês de Pico Estimado";
     }
@@ -160,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- INICIALIZAÇÃO ---
+  filterSelectedLabel.textContent = filterLabels[currentPeriodo];
   updateDashboardData();
   if (updateInterval) clearInterval(updateInterval);
   updateInterval = setInterval(updateDashboardData, 60000);

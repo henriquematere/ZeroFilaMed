@@ -1,141 +1,182 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zero Fila Med</title>
-    <meta name="description" content="Monitore em tempo real o fluxo de pacientes no hospital e evite filas.">
+    <meta
+      name="description"
+      content="Monitore em tempo real o fluxo de pacientes no hospital e evite filas."
+    />
 
-    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/static/style/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair:wght@900&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-    <link rel="stylesheet" href="/static/style/styles.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair:wght@900&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-</head>
-
-<body>
+  <body>
     <header class="header-bg">
-        <div class="container">
-            <h1 class="title">Zero Fila Med</h1>
-        </div>
+      <div class="container">
+        <h1 class="title">Zero Fila Med</h1>
+      </div>
     </header>
 
     <main class="container">
-        <section class="section-01">
-            <div class="dashboard-header">
-                <h1 class="title-waiting">Pronto-socorro</h1>
-                <div class="header-cards-container">
-                    <div class="card-waiting">
-                        <h2>Pessoas aguardando</h2>
-                        <h1 id="pessoas-aguardando" class="waiting">--</h1>
-                    </div>
-                    <div class="card-waiting">
-                        <h2>Status do Plantão</h2>
-                        <div class="info-geral">
-                            <span>Duração Média de Consulta:</span>
-                            <strong id="tempo-consulta">-- min</strong>
-                        </div>
-                        <div class="info-geral">
-                            <span>Médicos de Plantão:</span>
-                            <strong id="medicos-plantao">--</strong>
-                        </div>
-                    </div>
-                </div>
+      <section class="section-01">
+        <div class="dashboard-header">
+          <h1 class="title-waiting">Pronto-socorro</h1>
+          <div class="header-cards-container">
+            <div class="card-waiting">
+              <h2>Pessoas aguardando</h2>
+              <h1 id="pessoas-aguardando" class="waiting">--</h1>
             </div>
-
-            <div class="projection-panel card">
-                <div class="title-container">
-                    <h2 class="title-projection">Análise de Fluxo</h2>
-                    <div class="filter-dropdown-container">
-                        <button id="filter-button" class="filter-button">Filtrar Período</button>
-                        <ul id="filter-options" class="filter-dropdown">
-                            <li data-filter="12h">Últimas 12 horas</li>
-                            <li data-filter="24h">Últimas 24 horas</li>
-                            <li data-filter="semana">Última Semana</li>
-                            <li data-filter="mes">Último Mês</li>
-                            <li data-filter="3m">Últimos 3 Meses</li>
-                            <li data-filter="6m">Últimos 6 Meses</li>
-                            <li data-filter="ano">Último Ano</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="cards-container">
-                    <div class="card-info">
-                        <h3 id="card-titulo-periodo" class="card-title">CARREGANDO...</h3>
-                        <div class="info-row">
-                            <span>Total de Atendimentos</span>
-                            <span id="card-atendimentos-periodo" class="data-value">--</span>
-                        </div>
-                        <div class="info-row">
-                            <span>Tempo Médio de Espera</span>
-                            <span id="card-estimativa-periodo" class="data-value">-- min</span>
-                        </div>
-                    </div>
-                    <div class="card-info">
-                        <h3 class="card-title">PROJEÇÃO</h3>
-                        <div class="info-row">
-                            <span id="projecao-pico-label">Horário de Pico Estimado</span>
-                            <span id="projecao-pico" class="data-value">--</span>
-                        </div>
-                        <div class="info-row">
-                            <span>Fluxo Esperado</span>
-                            <span id="projecao-fluxo" class="data-value">--</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="charts-grid-container">
-                    <div class="chart-container">
-                        <h3 class="card-title">Atendimentos no Período</h3>
-                        <div class="chart-wrapper">
-                            <canvas id="atendimentosChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <h3 class="card-title">Tempo Médio de Espera (min)</h3>
-                        <div class="chart-wrapper">
-                            <canvas id="tempoMedioChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <p id="update-info" class="update-info">Buscando dados...</p>
+            <div class="card-waiting">
+              <h2>Status do Plantão</h2>
+              <div class="info-geral">
+                <span>Tempo Médio de Espera:</span>
+                <strong id="tempo-consulta">-- min</strong>
+              </div>
+              <div class="info-geral">
+                <span>Médicos de Plantão:</span>
+                <strong id="medicos-plantao">--</strong>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
 
-        <section class="section-02 card">
-            <div>
-                <h2 class="title-about">O que é<br><span class="title">Zero Fila Med</span>?</h2>
-                <p class="text-about">
-                    É um sistema que monitora em tempo real quantas pessoas estão no hospital. Além disso, gera gráficos diários mostrando o fluxo de atendimento e, com base no histórico, prevê quais horários e dias tendem a ser mais tranquilos. Assim, você pode <span class="text-bold">escolher o melhor momento</span> para ir ao hospital e <span class="text-bold">evitar filas</span>.
-                </p>
+        <div class="projection-panel card">
+          <div class="title-container">
+            <h2 class="title-projection">Análise de Fluxo</h2>
+            <div class="filter-dropdown-container">
+              <button id="filter-button" class="filter-button">
+                Filtrar Período:
+                <span id="filter-selected-label">Últimas 12 horas</span>
+              </button>
+              <ul id="filter-options" class="filter-dropdown">
+                <li data-filter="12h" class="active">Últimas 12 horas</li>
+                <li data-filter="24h">Últimas 24 horas</li>
+                <li data-filter="semana">Última Semana</li>
+                <li data-filter="mes">Último Mês</li>
+                <li data-filter="3m">Últimos 3 Meses</li>
+                <li data-filter="6m">Últimos 6 Meses</li>
+                <li data-filter="ano">Último Ano</li>
+              </ul>
             </div>
-            <img src="/static/img/Fila.png" alt="Médica atendendo paciente" class="about-image">
-        </section>
+          </div>
+
+          <div class="cards-container">
+            <div class="card-info">
+              <h3 id="card-titulo-periodo" class="card-title">CARREGANDO...</h3>
+              <div class="info-row">
+                <span>Total de Atendimentos</span>
+                <span id="card-atendimentos-periodo" class="data-value"
+                  >--</span
+                >
+              </div>
+              <div class="info-row">
+                <span>Tempo Médio de Espera</span>
+                <span id="card-estimativa-periodo" class="data-value"
+                  >-- min</span
+                >
+              </div>
+            </div>
+            <div class="card-info">
+              <h3 class="card-title">PROJEÇÃO</h3>
+              <div class="info-row">
+                <span id="projecao-pico-label">Horário de Pico Estimado</span>
+                <span id="projecao-pico" class="data-value">--</span>
+              </div>
+              <div class="info-row">
+                <span>Fluxo Esperado</span>
+                <span id="projecao-fluxo" class="data-value">--</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="charts-grid-container">
+            <div class="chart-container">
+              <h3 class="card-title">Atendimentos no Período</h3>
+              <div class="chart-wrapper">
+                <canvas id="atendimentosChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-container">
+              <h3 class="card-title">Tempo Médio de Espera (min)</h3>
+              <div class="chart-wrapper">
+                <canvas id="tempoMedioChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <p id="update-info" class="update-info">Buscando dados...</p>
+        </div>
+      </section>
+
+      <section class="section-02 card">
+        <div>
+          <h2 class="title-about">
+            O que é<br /><span class="title">Zero Fila Med</span>?
+          </h2>
+          <p class="text-about">
+            É um sistema que monitora em tempo real quantas pessoas estão no
+            hospital. Além disso, gera gráficos diários mostrando o fluxo de
+            atendimento e, com base no histórico, prevê quais horários e dias
+            tendem a ser mais tranquilos. Assim, você pode
+            <span class="text-bold">escolher o melhor momento</span> para ir ao
+            hospital e <span class="text-bold">evitar filas</span>.
+          </p>
+        </div>
+        <img
+          src="/static/img/Fila.png"
+          alt="Médica atendendo paciente"
+          class="about-image"
+        />
+      </section>
     </main>
 
     <footer class="footer-bg">
-        <div class="container">
-            <div class="footer-container">
-                <h1 class="title">Zero Fila Med</h1>
-                <div class="footer-info">
-                    <ul>
-                        <li><a class="location" href="#"><img src="/static/img/icon-location.svg" alt="Ícone de localização">R. Ângelo Melão, 790 - Três Lagoas, MS</a></li>
-                        <li><a class="call" href="tel:+556799999999"><img src="/static/img/icon-call.svg" alt="Ícone de telefone">(67) 9999-9999</a></li>
-                        <li><a class="mail" href="mailto:contato@zerofilamed.com"><img src="/static/img/icon-mail.svg" alt="Ícone de e-mail">contato@zerofilamed.com</a></li>
-                    </ul>
-                </div>
-            </div>
-            <p class="copyright">Copyright © 2025 • Zero Fila Med.</p>
+      <div class="container">
+        <div class="footer-container">
+          <h1 class="title">Zero Fila Med</h1>
+          <div class="footer-info">
+            <ul>
+              <li>
+                <a class="location" href="#"
+                  ><img
+                    src="/static/img/icon-location.svg"
+                    alt="Ícone de localização"
+                  />R. Ângelo Melão, 790 - Três Lagoas, MS</a
+                >
+              </li>
+              <li>
+                <a class="call" href="tel:+556799999999"
+                  ><img
+                    src="/static/img/icon-call.svg"
+                    alt="Ícone de telefone"
+                  />(67) 9999-9999</a
+                >
+              </li>
+              <li>
+                <a class="mail" href="mailto:contato@zerofilamed.com"
+                  ><img
+                    src="/static/img/icon-mail.svg"
+                    alt="Ícone de e-mail"
+                  />contato@zerofilamed.com</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
+        <p class="copyright">Copyright © 2025 • Zero Fila Med.</p>
+      </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/js/script.js"></script>
-</body>
-
+  </body>
 </html>

@@ -238,6 +238,12 @@ main.container {
   margin-bottom: 0.8rem;
 }
 
+.filter-dropdown li.active {
+  background: #1351b4;
+  color: #fff;
+  font-weight: bold;
+}
+
 .info-row .data-value {
   font-weight: 700;
   color: var(--color-11);
@@ -342,7 +348,6 @@ main.container {
   text-align: center;
 }
 
-/* === MEDIA QUERIES === */
 @media (max-width: 1024px) {
     .cards-container,
     .charts-grid-container {
